@@ -21,7 +21,7 @@ Off.args = {
   on: false,
 }
 
-export const Print = Template.bind({})
-Print.args = {
+export const Mypage = Template.bind({})
+Mypage.args = {
   currentMenu: 'MYPAGE',
 }
