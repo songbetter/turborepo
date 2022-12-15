@@ -4,14 +4,12 @@ name: 'CI-chromatic-app'
 # Event for the workflow
 on:
   push:
-    branches:
-      - main
     paths:
       - 'apps/docs/**'
 
 # List of jobs
 jobs:
-  chromatic-deployment:
+  test:
     # Operating System
     runs-on: ubuntu-latest
     strategy:
