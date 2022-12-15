@@ -1,21 +1,37 @@
 # Workflow name
-name: 'Chromatic'
+name: 'CI-chromatic-app'
 
 # Event for the workflow
-on: push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/docs/**'
 
 # List of jobs
 jobs:
   chromatic-deployment:
     # Operating System
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
     # Job steps
     steps:
-      - uses: actions/checkout@v1
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Install dependencies
-        # 👇 Install dependencies with the same package manager used in the project (replace it as needed) e.g. yarn, npm, pnpm
-        run: yarn
-        # 👇 Adds Chromatic as a step in the workflow
+        uses: ./.github/actions/yarn-install
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
       - name: Publish Project to Chromatic
         uses: chromaui/action@v1
         # Chromatic GitHub Action options
