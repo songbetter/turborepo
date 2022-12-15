@@ -3,6 +3,7 @@ interface Props {
   secondary?: boolean
   size?: 'small' | 'large'
   label?: string
+  backgroundColor?: string
 }
 
 export const Button = ({
@@ -10,15 +11,14 @@ export const Button = ({
   secondary = false,
   label = 'Boop',
   size = 'small',
+  backgroundColor,
 }: Props) => {
   return (
     <button
       style={{
-        backgroundColor: primary
-          ? '#404040'
-          : secondary
-          ? '#E0E0E0'
-          : '#FF6452',
+        backgroundColor:
+          backgroundColor ||
+          (primary ? '#404040' : secondary ? '#E0E0E0' : '#FF6452'),
         fontSize: size === 'large' ? '1.5rem' : '1.125rem',
         borderRadius: '1rem',
         padding: size === 'large' ? '1.1875rem 3rem' : '0.875rem 1.125rem',
