@@ -1,5 +1,5 @@
 # Workflow name
-name: 'CI-ui-package'
+name: 'CI-web-app'
 
 # Event for the workflow
 on:
@@ -7,7 +7,7 @@ on:
     branches:
       - main
     paths:
-      - 'packages/ui/**'
+      - 'apps/web/**'
 
 # List of jobs
 jobs:
@@ -33,6 +33,6 @@ jobs:
         uses: ./.github/actions/yarn-install
 
       - name: Build web-app
-        working-directory: apps/admin
+        working-directory: apps/web
         run: |
           yarn build
