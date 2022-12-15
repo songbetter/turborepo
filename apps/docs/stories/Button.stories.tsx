@@ -25,6 +25,12 @@ Primary.args = {
 
 export const Secondary = Template.bind({})
 Secondary.args = {
+  secondary: true,
+  label: 'Button',
+}
+
+export const Tertiary = Template.bind({})
+Tertiary.args = {
   label: 'Button',
 }
 
