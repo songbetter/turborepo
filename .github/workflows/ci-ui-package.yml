@@ -1,5 +1,5 @@
 # Workflow name
-name: 'CI-chromatic-app'
+name: 'CI-ui-package'
 
 # Event for the workflow
 on:
@@ -7,7 +7,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/docs/**'
+      - 'packages/ui/**'
 
 # List of jobs
 jobs:
@@ -32,11 +32,7 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/yarn-install
 
-      - name: Publish Project to Chromatic
-        uses: chromaui/action@v1
-        # Chromatic GitHub Action options
-        with:
-          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN}}
-          workingDir: './apps/docs'
-          exitZeroOnChanges: true
+      - name: Build web-app
+        working-directory: apps/admin
+        run: |
+          yarn build
