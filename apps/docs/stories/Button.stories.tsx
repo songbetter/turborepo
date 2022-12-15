@@ -34,9 +34,9 @@ Tertiary.args = {
   label: 'Button',
 }
 
-export const Blue = Template.bind({})
-Blue.args = {
-  backgroundColor: 'blue',
+export const Green = Template.bind({})
+Green.args = {
+  backgroundColor: 'green',
 }
 
 export const Large = Template.bind({})
