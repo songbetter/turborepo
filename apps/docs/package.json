@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "chromatic": "npx chromatic --project-token=CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
     "next": "13.0.0",
@@ -32,10 +33,13 @@
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "babel-loader": "^8.3.0",
+    "chromatic": "^6.13.1",
     "eslint": "7.32.0",
     "eslint-config-custom": "*",
     "eslint-plugin-storybook": "^0.6.8",
     "tsconfig": "*",
     "typescript": "^4.5.3"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "docs@0.0.0"
 }
