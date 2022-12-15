@@ -27,9 +27,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        uses: ./.github/actions/yarn-install
-
       - name: Publish Project to Chromatic
         uses: chromaui/action@v1
         # Chromatic GitHub Action options
