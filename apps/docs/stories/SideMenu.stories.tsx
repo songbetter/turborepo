@@ -20,3 +20,8 @@ export const Off = Template.bind({})
 Off.args = {
   on: false,
 }
+
+export const Print = Template.bind({})
+Print.args = {
+  currentMenu: 'MYPAGE',
+}
