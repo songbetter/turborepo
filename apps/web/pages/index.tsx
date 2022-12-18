@@ -1,10 +1,10 @@
-import { Button } from "ui";
+import { Counter } from 'ui'
 
 export default function Web() {
   return (
     <div>
-      <h1>Web</h1>
-      <Button />
+      <h1>Counter Cypress E2E Test</h1>
+      <Counter />
     </div>
-  );
+  )
 }
