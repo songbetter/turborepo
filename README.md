@@ -1,4 +1,4 @@
-## Practice Cypress - Conuter
+## Practice Cypress - [Conuter](https://639b3e322717d5e4cbdaf6b4-gwriyqasfy.chromatic.com/iframe.html?id=ui-counter--default&viewMode=story)
 
 0. 테스트 환경에 visit
 ```
