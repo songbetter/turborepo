@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Switch } from 'ui'
 
 export default {
-  title: 'Example/Switch',
+  title: 'UI/Switch',
   component: Switch,
 } as ComponentMeta<typeof Switch>
 const Template: ComponentStory<typeof Switch> = (args) => <Switch {...args} />
