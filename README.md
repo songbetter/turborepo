@@ -1,73 +1,71 @@
-# Turborepo starter
+## Practice Cypress - [Calculator](https://639b3e322717d5e4cbdaf6b4-gwriyqasfy.chromatic.com/iframe.html?id=ui-calculator--default&viewMode=story)
 
-This is an official Yarn (Berry) starter turborepo.
+> 한 번에 하나의 연산자만 사용할 수 있도록 구현되었습니다. ex) 1+1+1 (x) 1+1 (o)
 
-## What's inside?
 
-This turborepo uses [Yarn](https://yarnpkg.com/) as a package manager. It includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+0. 테스트 환경에 visit
 ```
-cd my-turborepo
-yarn run build
+ beforeEach(() => {
+    cy.visit('http://localhost:3000')
+  })
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
+1. 최초에 계산기 값을 0으로 보여준다
 ```
-cd my-turborepo
-yarn run dev
+cy.get('#calculator_result').invoke('text').should('eq', '0')
 ```
 
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
+2. AC(All Clear)버튼을 누르면 0으로 초기화 한다.
 ```
-cd my-turborepo
-yarn dlx turbo login
+cy.get('.operator').contains('AC').click() // 'AC' (All Clear)버튼을 클릭한다.
+
+cy.get('#calculator_result').invoke('text').should('eq', '0') // 변화된 값이 최초의 값과 같은지 확인한다.
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
+3. 2개의 숫자에 대해 덧셈이 가능하다.
 ```
-yarn dlx turbo link
+cy.get('.digit').contains('2').click() // digit 중 '2'를 클릭한다.
+cy.get('.operator').contains('+').click() // operator 중 '+'를 클릭한다.
+cy.get('.digit').contains('4').click() // digit 중 '4'를 클릭한다.
+cy.get('.operator').contains('=').click() // operator 중 '='을 클릭한다.
+cy.get('#calculator_result').should('have.text', '6') // 변화된 값이 2+4 = 6과 같은지 확인한다.
 ```
 
-## Useful Links
+4. 2개의 숫자에 대해 뺄셈이 가능하다.
+```
+cy.get('.digit').contains('3').click() // digit 중 '3'를 클릭한다.
+cy.get('.operator').contains('-').click() // operator 중 '-'를 클릭한다.
+cy.get('.digit').contains('2').click() // digit 중 '2'를 클릭한다.
+cy.get('.operator').contains('=').click() // operator 중 '='을 클릭한다.
+cy.get('#calculator_result').should('have.text', '1') // 변화된 값이 3-2 = 1과 같은지 확인한다.
+```
 
-Learn more about the power of Turborepo:
+5. 2개의 숫자에 대해 곱셈이 가능하다.
+```
+cy.get('.digit').contains('3').click() // digit 중 '3'를 클릭한다.
+cy.get('.operator').contains('-').click() // operator 중 'X'를 클릭한다.
+cy.get('.digit').contains('2').click() // digit 중 '2'를 클릭한다.
+cy.get('.operator').contains('=').click() // operator 중 '='을 클릭한다.
+cy.get('#calculator_result').should('have.text', '6') // 변화된 값이 3x2 = 6과 같은지 확인한다.
+```
 
-- [Pipelines](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+6. 2개의 숫자에 대해 나눗셈이 가능하다.
+```
+cy.get('.digit').contains('9').click() // digit 중 '9'를 클릭한다.
+cy.get('.operator').contains('/').click() // operator 중 'X/를 클릭한다.
+cy.get('.digit').contains('3').click() // digit 중 '3'를 클릭한다.
+cy.get('.operator').contains('=').click() // operator 중 '='을 클릭한다.
+cy.get('#calculator_result').should('have.text', '3') // 변화된 값이 9/3 = 3과 같은지 확인한다.
+```
+
+7. 계산 결과를 표현할 때 소수점 이하는 버림한다
+```
+cy.get('.digit').contains('3').click() // digit 중 '3'를 클릭한다.
+cy.get('.operator').contains('/').click() // operator 중 '/'를 클릭한다.
+cy.get('.digit').contains('2').click() // digit 중 '2'를 클릭한다.
+cy.get('.operator').contains('=').click() // operator 중 '='을 클릭한다.
+cy.get('#calculator_result').should('have.text', '1') // 변화된 값이 3/2 = 1과 같은지 확인한다.
+```
+
+### Reference
+- [하루만에 Cypress로 작성하는 자바스크립트 E2E 테스트 코드](https://www.inflearn.com/course/%EC%8B%B8%EC%9D%B4%ED%94%84%EB%A0%88%EC%8A%A4-%ED%85%8C%EC%8A%A4%ED%8A%B8)
