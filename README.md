@@ -1,73 +1,66 @@
-# Turborepo starter
+## Practice Cypress - Conuter
 
-This is an official Yarn (Berry) starter turborepo.
-
-## What's inside?
-
-This turborepo uses [Yarn](https://yarnpkg.com/) as a package manager. It includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+0. 테스트 환경에 visit
 ```
-cd my-turborepo
-yarn run build
+ beforeEach(() => {
+    cy.visit('http://localhost:3000')
+  })
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
+1. 최초에 카운터 값을 0으로 보여준다
 ```
-cd my-turborepo
-yarn run dev
+cy.get('#counter_value').invoke('text').should('eq', '0')
 ```
 
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
+2. '+' 버튼 클릭 시 count가 1 증가한다
 ```
-cd my-turborepo
-yarn dlx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-yarn dlx turbo link
+cy.get('#counter_value') // 기존 값을 가져온다
+  .invoke('text')
+  .then((value) => {
+    const preValue = Number(value)
+    cy.contains('+').click() // + 버튼을 클릭한다
+    cy.get('#counter_value') // 변화된 값이 기존값 +1인지 확인한다.
+      .invoke('text')
+      .should('eq', String(preValue + 1))
+    })
 ```
 
-## Useful Links
+3. '-' 버튼 클릭 시 count가 1 감소한다
+```
+cy.contains('+').click() // + 버튼을 클릭해서 기존값을 1로 만든다.
+cy.get('#counter_value') // 기존값 1을 가져온다
+  .invoke('text')
+  .then((value) => {
+    const preValue = Number(value)
+    cy.contains('-').click() // - 버튼을 클릭한다.
+    cy.get('#counter_value') 
+      .invoke('text')
+      .should('eq', String(preValue - 1)) // 변화된 값이 기존값 -1인지 확인한다.
+    })
+```
 
-Learn more about the power of Turborepo:
+4. '+' 버튼 클릭 시 count가 10이 넘는경우 더이상 증가하지 못한다.
+```
+for (let i = 0; i <11; i++) {
+  cy.contains('+').click() // 버튼을 10번 클릭하여 값을 10으로 만든다.
+}
 
-- [Pipelines](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+cy.get('#counter_value').invoke('text').should('eq', '10') // 변화된 값이 10인지 확인한다. (= 11이 아니라)
+```
+
+5. '-' 버튼 클릭 시 count가 0보다 작아지는 경우 감소하지 못한다.
+```
+cy.contains('-').click() // 기준값이 0에서 - 버튼을 클릭한다.
+cy.get('#counter_value').invoke('text').should('eq', '0') // 변화된 값이 0인지 확인한다. (= 변하지 않는다.)
+
+```
+ 
+6. reset 버튼 클릭 시 count가 0으로 초기화된다.
+```
+cy.contains('+').click() // + 버튼을 클릭한다.
+cy.contains('reset').click() // reset 버튼을 클릭한다.
+cy.get('#counter_value').invoke('text').should('eq', '0') // 변화된 값이 0인지 확인한다.
+```
+
+### Reference
+- [하루만에 Cypress로 작성하는 자바스크립트 E2E 테스트 코드](https://www.inflearn.com/course/%EC%8B%B8%EC%9D%B4%ED%94%84%EB%A0%88%EC%8A%A4-%ED%85%8C%EC%8A%A4%ED%8A%B8)
