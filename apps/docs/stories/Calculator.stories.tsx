@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Calculator } from 'ui'
 
 export default {
-  title: 'Example/Calculator',
+  title: 'UI/Calculator',
   component: Calculator,
 } as ComponentMeta<typeof Calculator>
 const Template: ComponentStory<typeof Calculator> = () => <Calculator />

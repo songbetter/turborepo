@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Header } from 'ui'
 
 export default {
-  title: 'Example/Header',
+  title: 'UI/Header',
   component: Header,
 } as ComponentMeta<typeof Header>
 const Template: ComponentStory<typeof Header> = (args) => <Header {...args} />

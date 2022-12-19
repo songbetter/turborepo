@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { SideMenu } from 'ui'
 
 export default {
-  title: 'Example/SideMenu',
+  title: 'UI/SideMenu',
   component: SideMenu,
 } as ComponentMeta<typeof SideMenu>
 const Template: ComponentStory<typeof SideMenu> = (args) => (
